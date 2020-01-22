@@ -4,19 +4,10 @@ from functools import partial
 
 class Main_Application(tk.Frame):
 
-    # BUTTONS = [
-    #     '~', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', "Backspace", '*',
-    #     'Tab', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', '7', '8', '9',
-    #     "CapsLock", 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', "Enter", '4', '5', '6',
-    #     "Shift", 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/', "Shift", '1', '2', '3',
-    #     "Space"
-    # ]
-
     BUTTONS = [
-        '~', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', "Backspace", '*',
-        'Tab', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', '7', '8', '9',
-        "CapsLock", 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', "Enter", '4', '5', '6',
-        "Shift", 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/', "Shift", '1', '2', '3',
+        'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', "Backspace", '7', '8', '9', '-',
+        'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', "Enter", '4', '5', '6', '+',
+        "Shift", 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', "Shift", '1', '2', '3', '/',
         "Space"
     ]
 
@@ -43,7 +34,7 @@ class Main_Application(tk.Frame):
 
             if button != "Space":
                 btn = tk.Button(master, text=button, width=8,
-                                bg="black", fg="white", command=cmd)
+                                bg="black", fg="white", relief="raised", command=cmd)
                 btn.grid(row=var_row, column=var_col)
             else:
                 tk.Button(master, text=button, width=40, bg="black", fg="white", command=cmd).grid(
