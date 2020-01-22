@@ -4,10 +4,17 @@ from functools import partial
 
 class Main_Application(tk.Frame):
 
-    BUTTONS = [
+    keys_list = [
         'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', "Backspace", '7', '8', '9', '-',
-        'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', "Enter", '4', '5', '6', '+',
-        "Shift", 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', "Shift", '1', '2', '3', '/',
+        'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ':', "Enter", '4', '5', '6', '+',
+        'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', ')', "Shift", '1', '2', '3', '/',
+        "Space"
+    ]
+
+    shift_list = [
+        'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', "Backspace", '7', '8', '9', '-',
+        'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', ':', "Enter", '4', '5', '6', '+',
+        'Z', 'X', 'C', 'V', 'B', 'N', 'M', ',', '.', ')', "Shift", '1', '2', '3', '/',
         "Space"
     ]
 
@@ -17,31 +24,40 @@ class Main_Application(tk.Frame):
         self.master.title("On-Screen Keyboard")
         self.master.resizable(0, 0)
         self.master.config(bg="sky blue")
+
         self.text_box = tk.Text(master, width=90, height=10, wrap=tk.WORD)
         self.text_box.grid(row=0, column=0, columnspan=40, padx=10, pady=10)
         self.is_shift = False
 
         var_row = 4
         var_col = 0
-        for button in self.BUTTONS:
+        index = 0
+        self.button = list(range(len(self.keys_list)))
+        for key in self.keys_list:
 
             if var_col > 14:
                 var_col = 0
                 var_row = var_row + 1
 
             # partial takes care of function and argument instead of 'lambda'
-            cmd = partial(self.button_command, button)
+            cmd = partial(self.button_command, key)
 
-            if button != "Space":
-                tk.Button(master, text=button, width=8, bg="black", fg="white", relief="raised",
-                          padx=4, pady=4, bd=4, command=cmd).grid(row=var_row, column=var_col)
+            self.button[index] = tk.Button(master, text=key, width=8, bg="black", fg="white", relief="raised",
+                                           padx=2, pady=2, bd=2, command=cmd)
+
+            # setup_layout
+            if key != "Space":
+                self.button[index].grid(row=var_row, column=var_col)
             else:
-                tk.Button(master, text=button, width=40, bg="black", fg="white", command=cmd).grid(
+                self.button[index]['width'] = 40
+                self.button[index].grid(
                     columnspan=40, row=var_row, column=var_col)
 
             var_col = var_col + 1
 
     def button_command(self, button):
+        """Function for detecting pressed buttons."""
+
         if button == "Space":
             self.text_box.insert(tk.INSERT, ' ')
         elif button == "Enter":
