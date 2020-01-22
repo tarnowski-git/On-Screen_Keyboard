@@ -32,7 +32,7 @@ class Main_Application(tk.Frame):
 
     def configure_gui(self):
         """Setting general configurations of the application"""
-        
+
         self.master.title("On-Screen Keyboard")
         self.master.resizable(0, 0)
         self.master.config(bg="sky blue")
@@ -90,8 +90,6 @@ class Main_Application(tk.Frame):
             self.text_box.insert(tk.INSERT, ' ')
         elif button == "Enter":
             self.text_box.insert(tk.INSERT, '\n')
-        elif button == "Tab":
-            self.text_box.insert(tk.INSERT, '   ')
         elif button == "Backspace":
             # The delete method of the text widget takes two indexes,
             # and will delete the characters between those indexes
@@ -117,6 +115,7 @@ class Main_Application(tk.Frame):
             for button in self.buttons_list:
                 button['text'] = self.shift_list[index]
                 index += 1
+                
         if self.is_shift == False:
             for button in self.buttons_list:
                 button['text'] = self.keys_list[index]
