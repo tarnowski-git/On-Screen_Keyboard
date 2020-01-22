@@ -33,9 +33,8 @@ class Main_Application(tk.Frame):
             cmd = partial(self.button_command, button)
 
             if button != "Space":
-                btn = tk.Button(master, text=button, width=8,
-                                bg="black", fg="white", relief="raised", command=cmd)
-                btn.grid(row=var_row, column=var_col)
+                tk.Button(master, text=button, width=8, bg="black", fg="white", relief="raised",
+                          padx=4, pady=4, bd=4, command=cmd).grid(row=var_row, column=var_col)
             else:
                 tk.Button(master, text=button, width=40, bg="black", fg="white", command=cmd).grid(
                     columnspan=40, row=var_row, column=var_col)
@@ -50,14 +49,15 @@ class Main_Application(tk.Frame):
         elif button == "Tab":
             self.text_box.insert(tk.INSERT, '   ')
         elif button == "Backspace":
-            self.text_box.delete(tk.INSERT, tk.END)
+            # The delete method of the text widget takes two indexes,
+            # and will delete the characters between those indexes
+            self.text_box.delete("insert -1 chars", tk.INSERT)
         elif button == "Shift":
             self.is_shift = True
             return None
         else:
             if self.is_shift == True:
                 self.text_box.insert(tk.INSERT, button.capitalize())
-
             else:
                 self.text_box.insert(tk.INSERT, button)
         # afer clicking anthing, a shift must gone
