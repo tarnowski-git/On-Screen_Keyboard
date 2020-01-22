@@ -39,7 +39,7 @@ class Main_Application(tk.Frame):
     def create_widgets(self):
         """Creating the widgets of the application"""
         # create a place to wriring
-        self.text_box = tk.Text(self.master, width=90, height=10, wrap=tk.WORD)
+        self.text_box = tk.Text(self.master, width=90, height=10, wrap=tk.WORD, font=("Arial", 15, "bold"))
         # create buttons
         index = 0
         for key in self.keys_list:
@@ -49,7 +49,7 @@ class Main_Application(tk.Frame):
 
             # assign new button to the list
             self.buttons_list[index] = tk.Button(self.master, text=key, width=8, bg="black", fg="white", relief="raised",
-                                                 padx=2, pady=2, bd=2, command=cmd)
+                                                 padx=2, pady=2, bd=2, command=cmd, font=("Arial", 9, "bold"))
 
             # for Space make the button wider
             if key == "Space":
@@ -95,6 +95,7 @@ class Main_Application(tk.Frame):
             self.text_box.delete("insert -1 chars", tk.INSERT)
         elif button == "Shift":
             self.is_shift = True
+            self.shift_keyboard()
             return None
         else:
             if self.is_shift == True:
@@ -103,6 +104,19 @@ class Main_Application(tk.Frame):
                 self.text_box.insert(tk.INSERT, button)
         # afer clicking anthing, a shift must gone
         self.is_shift = False
+        self.shift_keyboard()
+
+    def shift_keyboard(self):
+        """Function to switch the letter case on the keyboard"""
+        index = 0
+        if self.is_shift == True:
+            for button in self.buttons_list:
+                button['text'] = self.shift_list[index]
+                index += 1
+        if self.is_shift == False:
+            for button in self.buttons_list:
+                button['text'] = self.keys_list[index]
+                index += 1
 
 
 # Start program
