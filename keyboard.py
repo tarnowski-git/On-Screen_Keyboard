@@ -32,12 +32,14 @@ class Main_Application(tk.Frame):
 
     def configure_gui(self):
         """Setting general configurations of the application"""
+        
         self.master.title("On-Screen Keyboard")
         self.master.resizable(0, 0)
         self.master.config(bg="sky blue")
 
     def create_widgets(self):
         """Creating the widgets of the application"""
+
         # create a place to wriring
         self.text_box = tk.Text(self.master, width=90, height=10, wrap=tk.WORD, font=("Arial", 15, "bold"))
         # create buttons
@@ -60,6 +62,7 @@ class Main_Application(tk.Frame):
 
     def setup_layout(self):
         """Setup grid system"""
+
         self.text_box.grid(row=0, column=0, columnspan=40, padx=10, pady=10)
         # setup the buttons
         var_row = 4
@@ -108,6 +111,7 @@ class Main_Application(tk.Frame):
 
     def shift_keyboard(self):
         """Function to switch the letter case on the keyboard"""
+
         index = 0
         if self.is_shift == True:
             for button in self.buttons_list:
