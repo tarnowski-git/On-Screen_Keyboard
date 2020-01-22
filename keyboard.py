@@ -3,6 +3,7 @@ from functools import partial
 
 
 class Main_Application(tk.Frame):
+    """Main class of application"""
 
     keys_list = [
         'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', "Backspace", '7', '8', '9', '-',
@@ -20,40 +21,64 @@ class Main_Application(tk.Frame):
 
     def __init__(self, master):
         super().__init__(master)
+                # init variables
         self.master = master
+        self.is_shift = False
+        self.buttons_list = list(range(len(self.keys_list)))
+        self.configure_gui()
+        self.create_widgets()
+        self.setup_layout()
+
+
+    def configure_gui(self):
+        """Setting general configurations of the application"""
         self.master.title("On-Screen Keyboard")
         self.master.resizable(0, 0)
         self.master.config(bg="sky blue")
 
-        self.text_box = tk.Text(master, width=90, height=10, wrap=tk.WORD)
-        self.text_box.grid(row=0, column=0, columnspan=40, padx=10, pady=10)
-        self.is_shift = False
-
-        var_row = 4
-        var_col = 0
+    def create_widgets(self):
+        """Creating the widgets of the application"""
+        # create a place to wriring
+        self.text_box = tk.Text(self.master, width=90, height=10, wrap=tk.WORD)
+        # create buttons
         index = 0
-        self.button = list(range(len(self.keys_list)))
         for key in self.keys_list:
-
-            if var_col > 14:
-                var_col = 0
-                var_row = var_row + 1
 
             # partial takes care of function and argument instead of 'lambda'
             cmd = partial(self.button_command, key)
 
-            self.button[index] = tk.Button(master, text=key, width=8, bg="black", fg="white", relief="raised",
-                                           padx=2, pady=2, bd=2, command=cmd)
+            # assign new button to the list
+            self.buttons_list[index] = tk.Button(self.master, text=key, width=8, bg="black", fg="white", relief="raised",
+                                                 padx=2, pady=2, bd=2, command=cmd)
 
-            # setup_layout
-            if key != "Space":
-                self.button[index].grid(row=var_row, column=var_col)
+            # for Space make the button wider
+            if key == "Space":
+                self.buttons_list[index]['width'] = 40
+
+            # go to the next list item
+            index += 1
+
+    def setup_layout(self):
+        """Setup grid system"""
+        self.text_box.grid(row=0, column=0, columnspan=40, padx=10, pady=10)
+        # setup the buttons
+        var_row = 4
+        var_col = 0
+        for button in self.buttons_list:
+            # after 15 columns, go to the next row
+            if var_col > 14:
+                var_col = 0
+                var_row = var_row + 1
+
+            # for Space make a 'columnspan' 
+            if button['text'] != "Space":
+                button.grid(row=var_row, column=var_col)
             else:
-                self.button[index]['width'] = 40
-                self.button[index].grid(
+                button.grid(
                     columnspan=40, row=var_row, column=var_col)
 
-            var_col = var_col + 1
+            # go to the next column
+            var_col += 1
 
     def button_command(self, button):
         """Function for detecting pressed buttons."""
@@ -80,6 +105,8 @@ class Main_Application(tk.Frame):
         self.is_shift = False
 
 
-root = tk.Tk()
-application = Main_Application(master=root)
-application.mainloop()
+# Start program
+if __name__ == '__main__':
+    root = tk.Tk()
+    application = Main_Application(master=root)
+    application.mainloop()
