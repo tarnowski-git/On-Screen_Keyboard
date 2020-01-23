@@ -39,7 +39,8 @@ class Main_Application(tk.Frame):
 
     def create_widgets(self):
         """Creating the widgets of the application"""
-
+        # 
+        self.title_label = tk.Label(self.master, text="On-Screen Keyboard", font=("Arial", 15, "bold"), bg="sky blue", fg="black")
         # create a place to wriring
         self.text_box = tk.Text(self.master, width=90, height=10, wrap=tk.WORD, font=("Arial", 15, "bold"))
         # create buttons
@@ -62,8 +63,9 @@ class Main_Application(tk.Frame):
 
     def setup_layout(self):
         """Setup grid system"""
-
-        self.text_box.grid(row=0, column=0, columnspan=40, padx=10, pady=10)
+        
+        self.title_label.grid(row=0, columnspan=40)
+        self.text_box.grid(row=1, column=0, columnspan=40, padx=10, pady=10)
         # setup the buttons
         var_row = 4
         var_col = 0
@@ -115,7 +117,7 @@ class Main_Application(tk.Frame):
             for button in self.buttons_list:
                 button['text'] = self.shift_list[index]
                 index += 1
-                
+
         if self.is_shift == False:
             for button in self.buttons_list:
                 button['text'] = self.keys_list[index]
